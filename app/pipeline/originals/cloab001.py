@@ -6,6 +6,7 @@
 # - Colab secrets が無い環境では環境変数 ANTHROPIC_API_KEY を利用
 # ============================================================
 import argparse, os, sys, subprocess
+from model_resolver import resolve_model  # 使えるモデルを自動選択（claude-sonnet-4-6優先）
 import logging
 import sys
 
@@ -122,7 +123,7 @@ def _get_amount_triplet(item: dict) -> list:
 # -----------------------------
 # 1. 共通設定（そのまま使ってください）
 # -----------------------------
-MODEL = "claude-sonnet-4-6"
+MODEL = resolve_model()
 api_key = userdata.get('ANTHROPIC_API_KEY')
 if not api_key:
     raise RuntimeError("Colabの[ユーザーシークレット]に'ANTHROPIC_API_KEY'を登録してください。")
@@ -177,7 +178,7 @@ import anthropic
 # -----------------------------
 # 設定
 # -----------------------------
-MODEL = "claude-sonnet-4-6"
+MODEL = resolve_model()
 
 api_key = userdata.get('ANTHROPIC_API_KEY')
 if not api_key:
@@ -625,7 +626,7 @@ import anthropic
 # -----------------------------
 # 設定
 # -----------------------------
-MODEL = "claude-sonnet-4-6"
+MODEL = resolve_model()
 
 # Colab のユーザーシークレットから API キー取得
 api_key = userdata.get('ANTHROPIC_API_KEY')
